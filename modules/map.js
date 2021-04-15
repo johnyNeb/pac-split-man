@@ -7,15 +7,14 @@ function Map(size) {
         width = null,
         blockSize = size,
         pillSize = 0,
-        map = null,
-        Pacman = new PacManConfig().getPacManConfig();
+        map = null;
 
     function withinBounds(y, x) {
         return y >= 0 && y < height && x >= 0 && x < width;
     }
 
     function isWall(pos) {
-        return withinBounds(pos.y, pos.x) && map[pos.y][pos.x] === Pacman.WALL;
+        return withinBounds(pos.y, pos.x) && map[pos.y][pos.x] === PacManConfig.WALL;
     }
 
     function isFloorSpace(pos) {
@@ -23,9 +22,9 @@ function Map(size) {
             return false;
         }
         var peice = map[pos.y][pos.x];
-        return peice === Pacman.EMPTY ||
-            peice === Pacman.BISCUIT ||
-            peice === Pacman.PILL;
+        return peice === PacManConfig.EMPTY ||
+            peice === PacManConfig.BISCUIT ||
+            peice === PacManConfig.PILL;
     }
 
     function drawWall(ctx) {
@@ -81,7 +80,7 @@ function Map(size) {
 
         for (let i = 0; i < height; i += 1) {
             for (let j = 0; j < width; j += 1) {
-                if (map[i][j] === Pacman.PILL) {
+                if (map[i][j] === PacManConfig.PILL) {
                     ctx.beginPath();
 
                     ctx.fillStyle = "#000";
@@ -121,20 +120,20 @@ function Map(size) {
 
         var layout = map[y][x];
 
-        if (layout === Pacman.PILL) {
+        if (layout === PacManConfig.PILL) {
             return;
         }
 
         ctx.beginPath();
 
-        if (layout === Pacman.EMPTY || layout === Pacman.BLOCK ||
-            layout === Pacman.BISCUIT) {
+        if (layout === PacManConfig.EMPTY || layout === PacManConfig.BLOCK ||
+            layout === PacManConfig.BISCUIT) {
 
             ctx.fillStyle = "#000";
             ctx.fillRect((x * blockSize), (y * blockSize),
                 blockSize, blockSize);
 
-            if (layout === Pacman.BISCUIT) {
+            if (layout === PacManConfig.BISCUIT) {
                 ctx.fillStyle = "#FFF";
                 ctx.fillRect((x * blockSize) + (blockSize / 2.5),
                     (y * blockSize) + (blockSize / 2.5),

@@ -15,8 +15,7 @@ function User(game, map) {
         lives = null,
         score = 5,
         keyMap = {},
-        KEY = new Key().getKeys(),
-        Pacman = new PacManConfig().getPacManConfig();
+        KEY = new Key().getKeys();
 
     keyMap[KEY.ARROW_LEFT] = LEFT;
     keyMap[KEY.ARROW_UP] = UP;
@@ -163,17 +162,17 @@ function User(game, map) {
         block = map.block(nextWhole);
 
         if ((isMidSquare(position.y) || isMidSquare(position.x)) &&
-            block === Pacman.BISCUIT || block === Pacman.PILL) {
+            block === PacManConfig.BISCUIT || block === PacManConfig.PILL) {
 
-            map.setBlock(nextWhole, Pacman.EMPTY);
-            addScore((block === Pacman.BISCUIT) ? 10 : 50);
+            map.setBlock(nextWhole, PacManConfig.EMPTY);
+            addScore((block === PacManConfig.BISCUIT) ? 10 : 50);
             eaten += 1;
 
             if (eaten === 182) {
                 game.completedLevel();
             }
 
-            if (block === Pacman.PILL) {
+            if (block === PacManConfig.PILL) {
                 game.eatenPill();
             }
         }

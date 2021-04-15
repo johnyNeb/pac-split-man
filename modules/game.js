@@ -29,8 +29,7 @@ function Game() {
         map = null,
         user = null,
         stored = null,
-        KEY = new Key().getKeys(),
-        Pacman = new PacManConfig().getPacManConfig();
+        KEY = new Key().getKeys();
 
     function getTick() {
         return tick;
@@ -213,11 +212,11 @@ function Game() {
             map.draw(ctx);
             dialog("Press N to start a New game");
         } else if (state === EATEN_PAUSE &&
-            (tick - timerStart) > (Pacman.FPS / 3)) {
+            (tick - timerStart) > (PacManConfig.FPS / 3)) {
             map.draw(ctx);
             setState(PLAYING);
         } else if (state === DYING) {
-            if (tick - timerStart > (Pacman.FPS * 2)) {
+            if (tick - timerStart > (PacManConfig.FPS * 2)) {
                 loseLife();
             } else {
                 redrawBlock(userPos);
@@ -225,11 +224,11 @@ function Game() {
                     redrawBlock(ghostPos[i].old);
                     ghostPos.push(ghosts[i].draw(ctx));
                 }
-                user.drawDead(ctx, (tick - timerStart) / (Pacman.FPS * 2));
+                user.drawDead(ctx, (tick - timerStart) / (PacManConfig.FPS * 2));
             }
         } else if (state === COUNTDOWN) {
 
-            diff = 5 + Math.floor((timerStart - tick) / Pacman.FPS);
+            diff = 5 + Math.floor((timerStart - tick) / PacManConfig.FPS);
 
             if (diff === 0) {
                 map.draw(ctx);
@@ -329,7 +328,7 @@ function Game() {
         document.addEventListener("keydown", keyDown, true);
         document.addEventListener("keypress", keyPress, true);
 
-        timer = window.setInterval(mainLoop, 1000 / Pacman.FPS);
+        timer = window.setInterval(mainLoop, 1000 / PacManConfig.FPS);
     };
 
     return {

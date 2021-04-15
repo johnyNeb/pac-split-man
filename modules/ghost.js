@@ -10,8 +10,7 @@ function Ghost(game, map, colour) {
         direction = null,
         eatable = null,
         eaten = null,
-        due = null,
-        Pacman = new PacManConfig().getPacManConfig();
+        due = null;
 
     function getNewCoord(dir, current) {
 
@@ -105,7 +104,7 @@ function Ghost(game, map, colour) {
     };
 
     function secondsAgo(tick) {
-        return (game.getTick() - tick) / Pacman.FPS;
+        return (game.getTick() - tick) / PacManConfig.FPS;
     };
 
     function getColour() {

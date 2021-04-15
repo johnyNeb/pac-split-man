@@ -1,5 +1,5 @@
 import { PacManConfig } from './pacman_config.js';
-import { Key } from './key.js';
+import { Keys } from './keys.js';
 
 function User(game, map) {
 
@@ -14,13 +14,12 @@ function User(game, map) {
         due = null,
         lives = null,
         score = 5,
-        keyMap = {},
-        KEY = new Key().getKeys();
+        keyMap = {};
 
-    keyMap[KEY.ARROW_LEFT] = LEFT;
-    keyMap[KEY.ARROW_UP] = UP;
-    keyMap[KEY.ARROW_RIGHT] = RIGHT;
-    keyMap[KEY.ARROW_DOWN] = DOWN;
+    keyMap[Keys.ARROW_LEFT] = LEFT;
+    keyMap[Keys.ARROW_UP] = UP;
+    keyMap[Keys.ARROW_RIGHT] = RIGHT;
+    keyMap[Keys.ARROW_DOWN] = DOWN;
 
     function addScore(nScore) {
         score += nScore;

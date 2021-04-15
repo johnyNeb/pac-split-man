@@ -2,7 +2,7 @@ import { Map } from './map.js';
 import { User } from './user.js';
 import { Ghost } from './ghost.js';
 import { Audio } from './audio.js';
-import { Key } from './key.js'
+import { Keys } from './keys.js'
 import { PacManConfig } from './pacman_config.js';
 
 function Game() {
@@ -28,8 +28,7 @@ function Game() {
         timer = null,
         map = null,
         user = null,
-        stored = null,
-        KEY = new Key().getKeys();
+        stored = null;
 
     function getTick() {
         return tick;
@@ -75,16 +74,16 @@ function Game() {
     }
 
     function keyDown(e) {
-        if (e.keyCode === KEY.N) {
+        if (e.keyCode === Keys.N) {
             startNewGame();
-        } else if (e.keyCode === KEY.S) {
+        } else if (e.keyCode === Keys.S) {
             audio.disableSound();
             localStorage["soundDisabled"] = !soundDisabled();
-        } else if (e.keyCode === KEY.P && state === PAUSE) {
+        } else if (e.keyCode === Keys.P && state === PAUSE) {
             audio.resume();
             map.draw(ctx);
             setState(stored);
-        } else if (e.keyCode === KEY.P) {
+        } else if (e.keyCode === Keys.P) {
             stored = state;
             setState(PAUSE);
             audio.pause();

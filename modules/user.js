@@ -1,4 +1,7 @@
-function User(game, map, KEY, Pacman) {
+import { PacManConfig } from './pacman_config.js';
+import { Key } from './key.js';
+
+function User(game, map) {
 
     var position = null,
         NONE = 4,
@@ -11,7 +14,9 @@ function User(game, map, KEY, Pacman) {
         due = null,
         lives = null,
         score = 5,
-        keyMap = {};
+        keyMap = {},
+        KEY = new Key().getKeys(),
+        Pacman = new PacManConfig().getPacManConfig();
 
     keyMap[KEY.ARROW_LEFT] = LEFT;
     keyMap[KEY.ARROW_UP] = UP;

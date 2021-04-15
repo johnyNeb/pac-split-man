@@ -1,25 +1,6 @@
-import { Map } from './modules/map.js';
-import { User } from './modules/user.js';
-import { Ghost } from './modules/ghost.js';
-import { Audio } from './modules/audio.js';
 import { Game } from './modules/game.js';
-import { Key } from './modules/key.js'
 
-var Pacman = {
-    FPS: 30,
-    WALL: 0,
-    BISCUIT: 1,
-    EMPTY: 2,
-    BLOCK: 3,
-    PILL: 4,
-    keys: new Key().getKeys(),
-    Map: Map,
-    User: User,
-    Ghost: Ghost,
-    Audio: Audio
-};
-
-var PACMAN = new Game(Pacman);
+var PACMAN = new Game();
 
 Object.prototype.clone = function () {
     var i, newObj = (this instanceof Array) ? [] : {};

@@ -1,13 +1,15 @@
 import { MapSpec } from './map_spec.js';
+import { PacManConfig } from './pacman_config.js';
 
-function Map(size, Pacman) {
+function Map(size) {
 
     var height = null,
         width = null,
         blockSize = size,
         pillSize = 0,
         map = null,
-        mapSpec = new MapSpec();
+        mapSpec = new MapSpec(),
+        Pacman = new PacManConfig().getPacManConfig();
 
     function withinBounds(y, x) {
         return y >= 0 && y < height && x >= 0 && x < width;

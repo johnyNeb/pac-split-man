@@ -1,4 +1,6 @@
-function Ghost(game, map, colour, Pacman) {
+import { PacManConfig } from './pacman_config.js';
+
+function Ghost(game, map, colour) {
 
     var position = null,
         UP = 3,
@@ -8,7 +10,8 @@ function Ghost(game, map, colour, Pacman) {
         direction = null,
         eatable = null,
         eaten = null,
-        due = null;
+        due = null,
+        Pacman = new PacManConfig().getPacManConfig();
 
     function getNewCoord(dir, current) {
 

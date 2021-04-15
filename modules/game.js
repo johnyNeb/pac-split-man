@@ -1,4 +1,11 @@
-function Game(Pacman) {
+import { Map } from './map.js';
+import { User } from './user.js';
+import { Ghost } from './ghost.js';
+import { Audio } from './audio.js';
+import { Key } from './key.js'
+import { PacManConfig } from './pacman_config.js';
+
+function Game() {
 
     var WAITING = 5,
         PAUSE = 6,
@@ -22,7 +29,8 @@ function Game(Pacman) {
         map = null,
         user = null,
         stored = null,
-        KEY = Pacman.keys;
+        KEY = new Key().getKeys(),
+        Pacman = new PacManConfig().getPacManConfig();
 
     function getTick() {
         return tick;
@@ -264,7 +272,7 @@ function Game(Pacman) {
 
     function init(wrapper, root) {
 
-        var i, len, ghost,
+        var ghost,
             blockSize = wrapper.offsetWidth / 19,
             canvas = document.createElement("canvas");
 
@@ -275,15 +283,15 @@ function Game(Pacman) {
 
         ctx = canvas.getContext('2d');
 
-        audio = new Pacman.Audio({ "soundDisabled": soundDisabled });
-        map = new Pacman.Map(blockSize, Pacman);
-        user = new Pacman.User({
+        audio = new Audio({ "soundDisabled": soundDisabled });
+        map = new Map(blockSize);
+        user = new User({
             "completedLevel": completedLevel,
             "eatenPill": eatenPill
-        }, map, KEY, Pacman);
+        }, map);
 
         for (let i = 0, len = ghostSpecs.length; i < len; i += 1) {
-            ghost = new Pacman.Ghost({ "getTick": getTick }, map, ghostSpecs[i], Pacman);
+            ghost = new Ghost({ "getTick": getTick }, map, ghostSpecs[i]);
             ghosts.push(ghost);
         }
 

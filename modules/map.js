@@ -8,7 +8,6 @@ function Map(size) {
         blockSize = size,
         pillSize = 0,
         map = null,
-        mapSpec = new MapSpec(),
         Pacman = new PacManConfig().getPacManConfig();
 
     function withinBounds(y, x) {
@@ -37,8 +36,8 @@ function Map(size) {
         ctx.lineWidth = 5;
         ctx.lineCap = "round";
 
-        for (i = 0; i < mapSpec.getWalls().length; i += 1) {
-            line = mapSpec.getWalls()[i];
+        for (i = 0; i < MapSpec.walls.length; i += 1) {
+            line = MapSpec.walls[i];
             ctx.beginPath();
 
             for (j = 0; j < line.length; j += 1) {
@@ -61,7 +60,7 @@ function Map(size) {
     }
 
     function reset() {
-        map = mapSpec.getMap().clone();
+        map = MapSpec.map.clone();
         height = map.length;
         width = map[0].length;
     };

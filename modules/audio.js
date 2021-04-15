@@ -36,7 +36,7 @@ function Audio(game) {
 
     function ended(name) {
 
-        var i, tmp = [], found = false;
+        var tmp = [], found = false;
 
         files[name].removeEventListener("ended", endEvents[name], true);
 

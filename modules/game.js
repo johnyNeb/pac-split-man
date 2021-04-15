@@ -25,10 +25,10 @@ function Game() {
         timerStart = null,
         lastTime = 0,
         ctx = null,
-        timer = null,
         map = null,
         user = null,
-        stored = null;
+        stored = null,
+        timer = null;
 
     function getTick() {
         return tick;
@@ -123,27 +123,26 @@ function Game() {
 
         ctx.fillStyle = "#FFFF00";
 
-        for (var i = 0, len = user.getLives(); i < len; i++) {
+        for (let i = 0, len = user.getLives(); i < len; i++) {
             ctx.fillStyle = "#FFFF00";
             ctx.beginPath();
-            ctx.moveTo(150 + (25 * i) + map.blockSize / 2,
-                (topLeft + 1) + map.blockSize / 2);
+            ctx.moveTo(150 + (25 * i) + map.blockSize / 2, (topLeft-5) + map.blockSize / 2);
 
             ctx.arc(150 + (25 * i) + map.blockSize / 2,
-                (topLeft + 1) + map.blockSize / 2,
+                (topLeft-5) + map.blockSize / 2,
                 map.blockSize / 2, Math.PI * 0.25, Math.PI * 1.75, false);
             ctx.fill();
         }
 
         ctx.fillStyle = !soundDisabled() ? "#00FF00" : "#FF0000";
         ctx.font = "bold 16px sans-serif";
-        //ctx.fillText("♪", 10, textBase);
-        ctx.fillText("s", 10, textBase);
+        ctx.fillText("♪", 10, textBase);
 
         ctx.fillStyle = "#FFFF00";
         ctx.font = "14px BDCartoonShoutRegular";
         ctx.fillText("Score: " + user.theScore(), 30, textBase);
-        ctx.fillText("Level: " + level, 260, textBase);
+        ctx.fillText("Level: " + level, 280, textBase);
+        ctx.fillText("'s' to toggle sound", 400, textBase);
     }
 
     function redrawBlock(pos) {
@@ -313,7 +312,6 @@ function Game() {
             ["eatghost", root + "audio/eatghost." + extension],
             ["eatpill", root + "audio/eatpill." + extension],
             ["eating", root + "audio/eating.short." + extension],
-            ["eating2", root + "audio/eating.short." + extension],
             ["siren", root + "audio/siren." + extension]
         ];
 

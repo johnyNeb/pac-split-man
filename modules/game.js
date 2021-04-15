@@ -153,7 +153,7 @@ function Game() {
 
     function mainDraw() {
 
-        var diff, u, i, len, nScore;
+        var u, nScore;
 
         ghostPos = [];
 
@@ -173,8 +173,12 @@ function Game() {
         user.draw(ctx);
 
         userPos = u["new"];
-
+        let sirenPlaying = false;
         for (let i = 0, len = ghosts.length; i < len; i += 1) {
+            if (ghosts[i].isVunerable() && !sirenPlaying) {
+                sirenPlaying = true;
+                audio.play("siren");
+            }
             if (collided(userPos, ghostPos[i]["new"])) {
                 if (ghosts[i].isVunerable()) {
                     audio.play("eatghost");
@@ -253,6 +257,10 @@ function Game() {
         }
     };
 
+    function eatenBiscuit() {
+        audio.play("eating");
+    }
+
     function completedLevel() {
         setState(WAITING);
         level += 1;
@@ -284,12 +292,13 @@ function Game() {
         audio = new Audio({ "soundDisabled": soundDisabled });
         map = new Map(blockSize);
         user = new User({
-            "completedLevel": completedLevel,
-            "eatenPill": eatenPill
+            completedLevel: completedLevel,
+            eatenPill: eatenPill,
+            eatenBiscuit: eatenBiscuit
         }, map);
 
         for (let i = 0, len = ghostSpecs.length; i < len; i += 1) {
-            ghost = new Ghost({ "getTick": getTick }, map, ghostSpecs[i]);
+            ghost = new Ghost({ getTick: getTick }, map, ghostSpecs[i]);
             ghosts.push(ghost);
         }
 
@@ -304,7 +313,8 @@ function Game() {
             ["eatghost", root + "audio/eatghost." + extension],
             ["eatpill", root + "audio/eatpill." + extension],
             ["eating", root + "audio/eating.short." + extension],
-            ["eating2", root + "audio/eating.short." + extension]
+            ["eating2", root + "audio/eating.short." + extension],
+            ["siren", root + "audio/siren." + extension]
         ];
 
         load(audio_files, function () { loaded(); });

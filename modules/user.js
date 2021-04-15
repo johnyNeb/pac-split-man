@@ -169,10 +169,10 @@ function User(game, map) {
 
             if (eaten === 182) {
                 game.completedLevel();
-            }
-
-            if (block === PacManConfig.PILL) {
+            } else if (block === PacManConfig.PILL) {
                 game.eatenPill();
+            } else if (block === PacManConfig.BISCUIT) {
+                game.eatenBiscuit();
             }
         }
 

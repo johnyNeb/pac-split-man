@@ -56,7 +56,7 @@ function Game() {
 
     function startLevel() {
         user.resetPosition();
-        for (var i = 0; i < ghosts.length; i += 1) {
+        for (let i = 0; i < ghosts.length; i += 1) {
             ghosts[i].reset();
         }
         audio.play("start");

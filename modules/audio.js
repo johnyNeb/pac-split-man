@@ -27,7 +27,7 @@ function Audio(game) {
     };
 
     function disableSound() {
-        for (var i = 0; i < playing.length; i++) {
+        for (let i = 0; i < playing.length; i++) {
             files[playing[i]].pause();
             files[playing[i]].currentTime = 0;
         }

@@ -1034,7 +1034,7 @@ var PACMAN = (function () {
             canvas    = document.createElement("canvas");
         
         canvas.setAttribute("width", (blockSize * 19) + "px");
-        canvas.setAttribute("height", (blockSize * 22) + 30 + "px");
+        canvas.setAttribute("height", (blockSize * 22) + 60 + "px");
 
         wrapper.appendChild(canvas);
 

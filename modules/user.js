@@ -241,21 +241,26 @@ function User(game, map) {
         ctx.fill();
     };
 
+    function getPosition() {
+        return position;
+    }
+
     initUser();
 
     return {
-        "draw": draw,
-        "drawDead": drawDead,
-        "loseLife": loseLife,
-        "getLives": getLives,
-        "score": score,
-        "addScore": addScore,
-        "theScore": theScore,
-        "keyDown": keyDown,
-        "move": move,
-        "newLevel": newLevel,
-        "reset": reset,
-        "resetPosition": resetPosition
+        draw: draw,
+        drawDead: drawDead,
+        loseLife: loseLife,
+        getLives: getLives,
+        score: score,
+        addScore: addScore,
+        theScore: theScore,
+        keyDown: keyDown,
+        move: move,
+        newLevel: newLevel,
+        reset: reset,
+        resetPosition: resetPosition,
+        getPosition: getPosition
     };
 };
 

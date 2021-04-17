@@ -146,17 +146,17 @@ function Map(size) {
     reset();
 
     return {
-        "draw": draw,
-        "drawBlock": drawBlock,
-        "drawPills": drawPills,
-        "block": block,
-        "setBlock": setBlock,
-        "reset": reset,
-        "isWallSpace": isWall,
-        "isFloorSpace": isFloorSpace,
-        "height": height,
-        "width": width,
-        "blockSize": blockSize
+        draw: draw,
+        drawBlock: drawBlock,
+        drawPills: drawPills,
+        block: block,
+        setBlock: setBlock,
+        reset: reset,
+        isWallSpace: isWall,
+        isFloorSpace: isFloorSpace,
+        height: height,
+        width: width,
+        blockSize: blockSize
     };
 };
 

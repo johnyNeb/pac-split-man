@@ -5,7 +5,7 @@ import { Audio } from './audio.js';
 import { Keys } from './keys.js'
 import { PacManConfig } from './pacman_config.js';
 
-function Game() {
+function Game(wrapper) {
 
     var WAITING = 5,
         PAUSE = 6,
@@ -29,6 +29,23 @@ function Game() {
         user = null,
         stored = null,
         timer = null;
+
+    wrapper.addEventListener('splitChange', function(e) {
+        console.log(e.detail);
+        console.log('detected split change');
+        if (e.detail['PacMan_SmartGhost']) {
+            let ghostMode = Ghost.DUMB;
+            let userForGhost = undefined;
+            if (e.detail['PacMan_SmartGhost'] === 'on') {
+                ghostMode = Ghost.SMART;
+                userForGhost = user;
+            }
+            for (let i = 0; i < ghosts.length; i++) {
+                ghosts[i].setMode(ghostMode);
+                ghosts[i].setUser(userForGhost);
+            }
+        } 
+    });
 
     function getTick() {
         return tick;
@@ -57,7 +74,7 @@ function Game() {
     function startLevel() {
         user.resetPosition();
         for (let i = 0; i < ghosts.length; i += 1) {
-            ghosts[i].reset();
+            ghosts[i].reset(i);
         }
         audio.play("start");
         timerStart = tick;
@@ -126,9 +143,9 @@ function Game() {
         for (let i = 0, len = user.getLives(); i < len; i++) {
             ctx.fillStyle = "#FFFF00";
             ctx.beginPath();
-            ctx.moveTo(150 + (25 * i) + map.blockSize / 2, (topLeft-5) + map.blockSize / 2);
+            ctx.moveTo(240 + (25 * i) + map.blockSize / 2, (topLeft-5) + map.blockSize / 2);
 
-            ctx.arc(150 + (25 * i) + map.blockSize / 2,
+            ctx.arc(240 + (25 * i) + map.blockSize / 2,
                 (topLeft-5) + map.blockSize / 2,
                 map.blockSize / 2, Math.PI * 0.25, Math.PI * 1.75, false);
             ctx.fill();
@@ -136,13 +153,15 @@ function Game() {
 
         ctx.fillStyle = !soundDisabled() ? "#00FF00" : "#FF0000";
         ctx.font = "bold 16px sans-serif";
-        ctx.fillText("♪", 10, textBase);
+        ctx.fillText("s: ♪", 10, textBase);
 
         ctx.fillStyle = "#FFFF00";
         ctx.font = "14px BDCartoonShoutRegular";
-        ctx.fillText("Score: " + user.theScore(), 30, textBase);
-        ctx.fillText("Level: " + level, 280, textBase);
-        ctx.fillText("'s' to toggle sound", 400, textBase);
+        ctx.fillText("Score: " + user.theScore(), 44, textBase);
+        ctx.fillText("Level: " + level, 150, textBase);
+        ctx.font = "11px BDCartoonShoutRegular";
+        ctx.fillText("Ghosts: " + (ghosts[0].getMode() === Ghost.SMART ? 'SMART' : 'DUMB'), 340, textBase);
+        ctx.fillText("PacMan: " + 'Normal', 460, textBase);
     }
 
     function redrawBlock(pos) {
@@ -275,7 +294,7 @@ function Game() {
         }
     };
 
-    function init(wrapper, root) {
+    function init(root, splitClient) {
 
         var ghost,
             blockSize = wrapper.offsetWidth / 19,
@@ -339,7 +358,7 @@ function Game() {
     };
 
     return {
-        "init": init
+        init: init
     };
 
 };

@@ -72,11 +72,11 @@ function Audio(game) {
     };
 
     return {
-        "disableSound": disableSound,
-        "load": load,
-        "play": play,
-        "pause": pause,
-        "resume": resume
+        disableSound: disableSound,
+        load: load,
+        play: play,
+        pause: pause,
+        resume: resume
     };
 };
 

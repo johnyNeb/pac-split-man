@@ -143,9 +143,9 @@ function Game(wrapper) {
         for (let i = 0, len = user.getLives(); i < len; i++) {
             ctx.fillStyle = "#FFFF00";
             ctx.beginPath();
-            ctx.moveTo(240 + (25 * i) + map.blockSize / 2, (topLeft-5) + map.blockSize / 2);
+            ctx.moveTo(255 + (25 * i) + map.blockSize / 2, (topLeft-5) + map.blockSize / 2);
 
-            ctx.arc(240 + (25 * i) + map.blockSize / 2,
+            ctx.arc(255 + (25 * i) + map.blockSize / 2,
                 (topLeft-5) + map.blockSize / 2,
                 map.blockSize / 2, Math.PI * 0.25, Math.PI * 1.75, false);
             ctx.fill();
@@ -158,7 +158,7 @@ function Game(wrapper) {
         ctx.fillStyle = "#FFFF00";
         ctx.font = "14px BDCartoonShoutRegular";
         ctx.fillText("Score: " + user.theScore(), 44, textBase);
-        ctx.fillText("Level: " + level, 150, textBase);
+        ctx.fillText("Level: " + level, 160, textBase);
         ctx.font = "11px BDCartoonShoutRegular";
         ctx.fillText("Ghosts: " + (ghosts[0].getMode() === Ghost.SMART ? 'SMART' : 'DUMB'), 340, textBase);
         ctx.fillText("PacMan: " + 'Normal', 460, textBase);

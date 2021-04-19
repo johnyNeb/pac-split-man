@@ -1,0 +1,29 @@
+{
+  "name": "pacman",
+  "version": "0.0.1",
+  "description": "HTML 5 PacMan",
+  "main": "index.html",
+  "scripts": {
+    "start": "node app.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dogeared/pacman.git"
+  },
+  "keywords": [
+    "game",
+    "pacman",
+    "feature",
+    "flags"
+  ],
+  "author": "Micah Silverman",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/dogeared/pacman/issues"
+  },
+  "homepage": "https://github.com/dogeared/pacman#readme",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}

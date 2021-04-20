@@ -1,0 +1,8 @@
+let SplitConfig = {
+    core: {
+        authorizationKey: '{{SPLIT_AUTH_KEY}}',
+        key: 'ANONYMOUS'
+    }
+}
+
+export { SplitConfig };

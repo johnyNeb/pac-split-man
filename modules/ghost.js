@@ -10,7 +10,9 @@ function Ghost(game, map, colour) {
         direction = null,
         eatable = null,
         eaten = null,
-        due = null;
+        due = null,
+        user = undefined,
+        mode = Ghost.DUMB;
 
     function getNewCoord(dir, current) {
 
@@ -56,10 +58,11 @@ function Ghost(game, map, colour) {
         return moves[Math.floor(Math.random() * 2)];
     };
 
-    function reset() {
+    function reset(ghostNum) {
         eaten = null;
         eatable = null;
         position = { "x": 90, "y": 80 };
+        position.x += (ghostNum < 2) ? (ghostNum+1) * -10 : ghostNum * 10;
         direction = getRandomDirection();
         due = getRandomDirection();
     };
@@ -197,8 +200,7 @@ function Ghost(game, map, colour) {
         return false;
     };
 
-    function move(ctx) {
-
+    function moveDumb(ctx) {
         var oldPos = position,
             onGrid = onGridSquare(position),
             npos = null;
@@ -229,7 +231,7 @@ function Ghost(game, map, colour) {
             })) {
 
             due = getRandomDirection();
-            return move(ctx);
+            return moveDumb(ctx);
         }
 
         position = npos;
@@ -245,17 +247,67 @@ function Ghost(game, map, colour) {
             "new": position,
             "old": oldPos
         };
+    }
+
+    function moveSmart(ctx) {
+        if (
+            !user || isVunerable() || isHidden() ||
+            (position.y === 80 && position.x > 80 && position.x < 100)
+        ) {
+            return moveDumb(ctx);
+        }
+        // console.log('user position: ' + JSON.stringify(user.getPosition()));
+        
+        let userPos = user.getPosition();
+        let dy = Math.abs(userPos.y - position.y);
+        let dx = Math.abs(userPos.x - position.x);
+        if (dy > dx) { // try UP/DOWN first
+            due = (userPos.y > position.y) ? DOWN : UP
+        } else { // try LEFT/RIGHT first
+            due = (userPos.x > position.x) ? RIGHT : LEFT
+        }
+
+        return moveDumb(ctx);
+    }
+
+    function move(ctx) {
+        if (mode === Ghost.DUMB) {
+            return moveDumb(ctx);
+        } else if (mode === Ghost.SMART) {
+            return moveSmart(ctx);
+        }
     };
 
+    function getMode() {
+        return mode;
+    }
+
+    function setMode(newMode) {
+        if (newMode === Ghost.SMART || newMode === Ghost.DUMB) {
+            mode = newMode;
+        }
+        console.log('new mode: ' + (newMode == Ghost.SMART ? 'SMART' : 'DUMB'));
+    }
+
+    function setUser(newUser) {
+        user = newUser;
+    }
+
     return {
-        "eat": eat,
-        "isVunerable": isVunerable,
-        "isDangerous": isDangerous,
-        "makeEatable": makeEatable,
-        "reset": reset,
-        "move": move,
-        "draw": draw
+        eat: eat,
+        isVunerable: isVunerable,
+        isDangerous: isDangerous,
+        makeEatable: makeEatable,
+        reset: reset,
+        move: move,
+        draw: draw,
+        getMode: getMode,
+        setMode: setMode,
+        setUser: setUser
     };
 };
+
+Ghost.DUMB = 0;
+Ghost.SMART = 1;
 
 export { Ghost };

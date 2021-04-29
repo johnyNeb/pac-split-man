@@ -33,11 +33,11 @@ function Game(wrapper) {
     wrapper.addEventListener('splitChange', function(e) {
         console.log(e.detail);
         console.log('detected split change');
-        if (e.detail['PacMan_SmartGhost']) {
-            let ghostMode = Ghost.DUMB;
+        if (e.detail['PacMan_RadarGhost']) {
+            let ghostMode = Ghost.CHLL;
             let userForGhost = undefined;
-            if (e.detail['PacMan_SmartGhost'] === 'on') {
-                ghostMode = Ghost.SMART;
+            if (e.detail['PacMan_RadarGhost'] === 'on') {
+                ghostMode = Ghost.RADAR;
                 userForGhost = user;
             }
             for (let i = 0; i < ghosts.length; i++) {
@@ -160,8 +160,8 @@ function Game(wrapper) {
         ctx.fillText("Score: " + user.theScore(), 44, textBase);
         ctx.fillText("Level: " + level, 160, textBase);
         ctx.font = "11px BDCartoonShoutRegular";
-        ctx.fillText("Ghosts: " + (ghosts[0].getMode() === Ghost.SMART ? 'SMART' : 'DUMB'), 340, textBase);
-        ctx.fillText("PacMan: " + 'Normal', 460, textBase);
+        ctx.fillText("Ghosts: " + (ghosts[0].getMode() === Ghost.RADAR ? 'RADAR' : 'CHILL'), 340, textBase);
+        ctx.fillText("PacMan: " + 'Manual', 460, textBase);
     }
 
     function redrawBlock(pos) {

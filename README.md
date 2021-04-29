@@ -7,6 +7,14 @@ file into [modules](modules).
 
 ## Running
 
+You'll need to create a split account to see the different play modes in action.
+
+Go to [https://www.split.io/signup/](https://www.split.io/signup/) to create a free account.
+
+You'll need to create a Split Treatment named: `PacMan_RadarGhost` with `on` and `off` default rule.
+
+To learn more, go to: [https://www.split.io/product/feature-flags/](https://www.split.io/product/feature-flags/).
+
 The requirements for running locally or in a deployed environment are minimal.
 
 * node.js

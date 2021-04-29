@@ -24,7 +24,7 @@ var factory = splitio(SplitConfig);
 var splitClient = factory.client();
 
 function handleTreatments() {
-    var treatments = splitClient.getTreatments(['PacMan_SmartGhost', 'PacMan_SuperPac']);
+    var treatments = splitClient.getTreatments(['PacMan_RadarGhost', 'PacMan_SuperPac']);
     el.dispatchEvent(new CustomEvent('splitChange', { detail: treatments }));
 }
 

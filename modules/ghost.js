@@ -12,7 +12,7 @@ function Ghost(game, map, colour) {
         eaten = null,
         due = null,
         user = undefined,
-        mode = Ghost.DUMB;
+        mode = Ghost.CHILL;
 
     function getNewCoord(dir, current) {
 
@@ -271,9 +271,9 @@ function Ghost(game, map, colour) {
     }
 
     function move(ctx) {
-        if (mode === Ghost.DUMB) {
+        if (mode === Ghost.CHILL) {
             return moveDumb(ctx);
-        } else if (mode === Ghost.SMART) {
+        } else if (mode === Ghost.RADAR) {
             return moveSmart(ctx);
         }
     };
@@ -283,10 +283,10 @@ function Ghost(game, map, colour) {
     }
 
     function setMode(newMode) {
-        if (newMode === Ghost.SMART || newMode === Ghost.DUMB) {
+        if (newMode === Ghost.RADAR || newMode === Ghost.CHILL) {
             mode = newMode;
         }
-        console.log('new mode: ' + (newMode == Ghost.SMART ? 'SMART' : 'DUMB'));
+        console.log('new mode: ' + (newMode == Ghost.RADAR ? 'RADAR' : 'CHILL'));
     }
 
     function setUser(newUser) {
@@ -307,7 +307,7 @@ function Ghost(game, map, colour) {
     };
 };
 
-Ghost.DUMB = 0;
-Ghost.SMART = 1;
+Ghost.CHILL = 0;
+Ghost.RADAR = 1;
 
 export { Ghost };

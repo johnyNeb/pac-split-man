@@ -34,7 +34,7 @@ function Game(wrapper) {
         console.log(e.detail);
         console.log('detected split change');
         if (e.detail['PacMan_RadarGhost']) {
-            let ghostMode = Ghost.CHLL;
+            let ghostMode = Ghost.CHILL;
             let userForGhost = undefined;
             if (e.detail['PacMan_RadarGhost'] === 'on') {
                 ghostMode = Ghost.RADAR;

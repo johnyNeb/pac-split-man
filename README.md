@@ -32,4 +32,4 @@ SPLIT_AUTH_KEY=<your split client auth key> npm start
 
 You can easily deploy to Heroku using the purple button:
 
-[![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy)
+[![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/splitio-examples/pac-split-man)

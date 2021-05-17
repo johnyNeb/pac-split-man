@@ -9,7 +9,7 @@ file into [modules](modules).
 
 ## Running
 
-You need to a split account to see the different play modes in action.
+You need a split account to see the different play modes in action.
 
 Go to [https://www.split.io/signup/](https://www.split.io/signup/) to create a free account.
 

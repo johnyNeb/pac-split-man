@@ -200,7 +200,7 @@ function Ghost(game, map, colour) {
         return false;
     };
 
-    function moveDumb(ctx) {
+    function moveChill(ctx) {
         var oldPos = position,
             onGrid = onGridSquare(position),
             npos = null;
@@ -231,7 +231,7 @@ function Ghost(game, map, colour) {
             })) {
 
             due = getRandomDirection();
-            return moveDumb(ctx);
+            return moveChill(ctx);
         }
 
         position = npos;
@@ -249,12 +249,12 @@ function Ghost(game, map, colour) {
         };
     }
 
-    function moveSmart(ctx) {
+    function moveRadar(ctx) {
         if (
             !user || isVunerable() || isHidden() ||
             (position.y === 80 && position.x > 80 && position.x < 100)
         ) {
-            return moveDumb(ctx);
+            return moveChill(ctx);
         }
         // console.log('user position: ' + JSON.stringify(user.getPosition()));
         
@@ -267,14 +267,14 @@ function Ghost(game, map, colour) {
             due = (userPos.x > position.x) ? RIGHT : LEFT
         }
 
-        return moveDumb(ctx);
+        return moveChill(ctx);
     }
 
     function move(ctx) {
         if (mode === Ghost.CHILL) {
-            return moveDumb(ctx);
+            return moveChill(ctx);
         } else if (mode === Ghost.RADAR) {
-            return moveSmart(ctx);
+            return moveRadar(ctx);
         }
     };
 

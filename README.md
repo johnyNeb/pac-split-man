@@ -1,6 +1,6 @@
 # Pure JS Pac-Man
 
-![Pac Split Man](pac-split-man.png)
+![Pac Split Man](split_screen.gif)
 
 Check out the blog post that uses this repo [here](https://www.split.io/blog/feature-flag-benefits-pacman/).
 

@@ -2,6 +2,8 @@
 
 ![Pac Split Man](pac-split-man.png)
 
+Check out the blog post that uses this repo [here](https://www.split.io/blog/feature-flag-benefits-pacman/).
+
 This is based on the excellent work from [https://github.com/daleharvey/pacman](https://github.com/daleharvey/pacman)
 
 The only major differences are breaking up the monolothic [pacman.js](https://github.com/daleharvey/pacman/blob/master/pacman.js) 

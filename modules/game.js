@@ -28,7 +28,8 @@ function Game(wrapper) {
         map = null,
         user = null,
         stored = null,
-        timer = null;
+        timer = null,
+        lifeStart = null;
 
     wrapper.addEventListener('splitChange', function(e) {
         console.log(e.detail);
@@ -46,7 +47,7 @@ function Game(wrapper) {
             }
         } 
     });
-
+    
     function getTick() {
         return tick;
     };
@@ -113,6 +114,11 @@ function Game(wrapper) {
     }
 
     function loseLife() {
+        wrapper.dispatchEvent(new CustomEvent('lifeLost', { 
+            detail: { pacman: {
+                ttl: Date.now() - lifeStart
+            }} 
+        }));
         setState(WAITING);
         user.loseLife();
         if (user.getLives() > 0) {
@@ -254,6 +260,8 @@ function Game(wrapper) {
             if (diff === 0) {
                 map.draw(ctx);
                 setState(PLAYING);
+                // start life timer
+                lifeStart = Date.now()
             } else {
                 if (diff !== lastTime) {
                     lastTime = diff;

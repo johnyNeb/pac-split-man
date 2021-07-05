@@ -32,7 +32,8 @@ var factory = splitio(SplitConfig);
 var splitClient = factory.client();
 
 function handleTreatments() {
-    var treatments = splitClient.getTreatments(['PacMan_RadarGhost', 'PacMan_SuperPac']);
+    var treatments = 
+        splitClient.getTreatments(['PacMan_RadarGhost', 'PacMan_SuperPac']);
     el.dispatchEvent(new CustomEvent('splitChange', { detail: treatments }));
 }
 
@@ -44,6 +45,11 @@ splitClient.on(splitClient.Event.SDK_READY, function () {
 splitClient.on(splitClient.Event.SDK_UPDATE, function () {
     handleTreatments();
     console.log('The SDK has been updated!');
+});
+
+el.addEventListener('lifeLost', function(e) {
+    splitClient.track('user', 'PacMan_TTL', e.detail.pacman.ttl);
+    console.log(`track PacMan_TTL with: ${e.detail.pacman.ttl}`);
 });
 
 if (Modernizr.canvas && Modernizr.localstorage &&

@@ -1,7 +1,6 @@
 let SplitConfig = {
     core: {
-        authorizationKey: '{{SPLIT_AUTH_KEY}}',
-        key: 'ANONYMOUS'
+        authorizationKey: '{{SPLIT_AUTH_KEY}}'
     }
 }
 

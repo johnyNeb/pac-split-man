@@ -19,6 +19,14 @@ Object.prototype.clone = function () {
 var el = document.getElementById("pacman");
 var PACMAN = new Game(el);
 
+const queryString = window.location.search;
+const urlParams = new URLSearchParams(queryString);
+if (urlParams.get('username')) {
+    SplitConfig.core.key = urlParams.get('username');
+} else {
+    SplitConfig.core.key = 'ANONYMOUS';
+}
+
 var factory = splitio(SplitConfig);
 
 var splitClient = factory.client();

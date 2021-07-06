@@ -47,6 +47,11 @@ function Game(wrapper) {
             }
         } 
     });
+
+    function setLifeStart() {
+        // start life timer and account for countdown
+        lifeStart = Date.now() + 5000;
+    }
     
     function getTick() {
         return tick;
@@ -88,6 +93,7 @@ function Game(wrapper) {
         user.reset();
         map.reset();
         map.draw(ctx);
+        setLifeStart();
         startLevel();
     }
 
@@ -119,6 +125,7 @@ function Game(wrapper) {
                 ttl: Date.now() - lifeStart
             }} 
         }));
+        setLifeStart();
         setState(WAITING);
         user.loseLife();
         if (user.getLives() > 0) {
@@ -260,8 +267,6 @@ function Game(wrapper) {
             if (diff === 0) {
                 map.draw(ctx);
                 setState(PLAYING);
-                // start life timer
-                lifeStart = Date.now()
             } else {
                 if (diff !== lastTime) {
                     lastTime = diff;

@@ -2,6 +2,10 @@
 
 ![Pac Split Man](split_screen.gif)
 
+You can easily deploy to Heroku using the purple button:
+
+[![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/splitio-examples/pac-split-man)
+
 Check out the blog post that uses this repo [here](https://www.split.io/blog/feature-flag-benefits-pacman/).
 
 This is based on the excellent work from [https://github.com/daleharvey/pacman](https://github.com/daleharvey/pacman)

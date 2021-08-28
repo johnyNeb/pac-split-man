@@ -1,40 +1,41 @@
 import { SplitConfig } from './split_config.js';
 import { Game } from './modules/game.js';
 
-Object.prototype.clone = function () {
-    var i, newObj = (this instanceof Array) ? [] : {};
-    for (i in this) {
-        if (i === 'clone') {
-            continue;
-        }
-        if (this[i] && typeof this[i] === "object") {
-            newObj[i] = this[i].clone();
-        } else {
-            newObj[i] = this[i];
-        }
-    }
-    return newObj;
-};
-
 var el = document.getElementById("pacman");
 var PACMAN = new Game(el);
 
 const queryString = window.location.search;
 const urlParams = new URLSearchParams(queryString);
-if (urlParams.get('username')) {
-    SplitConfig.core.key = urlParams.get('username');
-} else {
+
+var treatments = [];
+var attributes = {};
+for (const [paramName, paramValue] of urlParams) {
+    if (paramName === 'key') {
+        SplitConfig.core.key = paramValue;
+    } else if (paramName === 'treatments') {
+        paramValue.split(',').forEach(function (treatment) {
+            treatments.push(treatment);
+        })
+    } else {
+        attributes[paramName] = paramValue;
+    }
+}
+
+if (!SplitConfig.core.key) {
     SplitConfig.core.key = 'ANONYMOUS';
 }
 
-var factory = splitio(SplitConfig);
+if (!treatments.length) {
+    treatments.push('PacMan_RadarGhost');
+}
 
-var splitClient = factory.client();
+var splitClient = splitio(SplitConfig).client();
 
 function handleTreatments() {
-    var treatments = 
-        splitClient.getTreatments(['PacMan_RadarGhost', 'PacMan_SuperPac']);
-    el.dispatchEvent(new CustomEvent('splitChange', { detail: treatments }));
+    var treatmentsResult = splitClient.getTreatments(treatments, attributes);
+    el.dispatchEvent(
+        new CustomEvent('splitChange', { detail: treatmentsResult })
+    );
 }
 
 splitClient.on(splitClient.Event.SDK_READY, function () {

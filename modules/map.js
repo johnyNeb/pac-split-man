@@ -1,6 +1,22 @@
 import { MapSpec } from './map_spec.js';
 import { PacManConfig } from './pacman_config.js';
 
+// TODO global impact; only used in one place - refactor
+Object.prototype.clone = function () {
+    var i, newObj = (this instanceof Array) ? [] : {};
+    for (i in this) {
+        if (i === 'clone') {
+            continue;
+        }
+        if (this[i] && typeof this[i] === "object") {
+            newObj[i] = this[i].clone();
+        } else {
+            newObj[i] = this[i];
+        }
+    }
+    return newObj;
+};
+
 function Map(size) {
 
     var height = null,

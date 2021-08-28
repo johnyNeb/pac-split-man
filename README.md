@@ -125,6 +125,45 @@ Split has a lot more power through fine grained control on how and when users se
 
 A `segment` is a grouping of users along some common dimension. Let's set up pac-man to `RADAR` mode for select users.
 
-From your Split admin console click **Segments**. 
+From your Split admin console click **Segments**. Click **Create segment**. Name it: `PacMan_RadarGhost_Users` and click **Create**. Click **Add definition**. Click **Add user > Add individually**. Where it says `Start typing a user`, enter: **bob** and click **add new User: bob**. Repeat the same for a user named **sally**. Click **Confirm**.
+
+Click **Splits** and click **PacMan_RadarGhost**.
+
+**NOTE**: At this point, set the default rule to serve **off** if it isn't already. 
+
+In the `Set targeting rules` section, click **Add rule**. This will open up a dialog with some defaults set. You can read this as a sentence: `If user is in segment...`. Click **Select Segment...** and click **PacMan_RadarGhost_Users**. Change the `serve` value from **off** to **on**. Click **Save changes** and then click **Confirm**.
+
+Back in the browser with the pac-man app, add the following to the end of the url: `?key=jim` and hit enter.
+
+For instance, if you deployed to codesandbox.io, your url would look something like this: `https://byrl4.sse.codesandbox.io?key=jim`. If you are running the app locally, your url would look something like this: `http://localhost:3000?key=jim`.
+
+Notice that the ghosts mode is `CHILL`. Repeat the above, but change the end of the url to: `?key=bob`. Notice that now the ghosts mode is `RADAR`!
+
+Unlike before, when the mode was globally set to **on** or **off**, it's now different depending on the user identified by `key`. If you change the end of the url to `?key=sally`, the mode should still be `RADAR`. For any value - other than `sally` or `bob`, the mode should be `CHILL`.
+
+Let's refine the rule even further. To the right of the rule you just added, click the plus sign (![plus](readme_images/plus.png)). In the field showing `Add attribute` to the right of `user` enter: **special_beta_tester**. In the dropdown to the right of this field, select **boolean > is**. In the dropdown to the right of **is** select **true**. This rule should now look like this:
+
+![rule](readme_images/special_beta_user.png)
+
+Click **Save changes** and click **Confirm**.
+
+Now, back in the browser where pac-man is running, change the end of the url to: `?key=bob`. Notice that the mode is `CHILL`. Even though `bob` is in the `PacMan_RadarGhost_Users` segment, the attribute: `special_beta_tester` has not been satisfied. Now, change the end of the url to: `?key=bob&special_beta_tester=true`. Now the mode is `RADAR`.
+
+The last thing to examine here is the "Kill Switch". Imagine you have a complex set of rules that determine who sees a new feature and who doesn't. Now imagine that something's gone horrible wrong with this new feature. In the old days, you'd have to deploy a patch or deploy a rollback as fast as you can. Now, you can use an easy feature of Split to quickly turn off the feature for everyone.
+
+Make sure you're currently seeing the `RADAR` mode in the browser with the pac-man app.
+
+Back over in Split, click **Splits** and click **PacMan_RadarGhost**. Click **Kill**. Enter **KILL** in the field and click **Kill**.
+
+**NOTE**: This may seem redundant, but since this will impact all users, Split takes great care to make sure you really want to kill a feature.
+
+Back in the pac-man browser tab, you should notice that the mode is now `CHILL`, even if the end of the url is `key=bob&special_beta_tester=true`.
+
+You can easily restore the feature flag back to it's former settings by clicking **Restore** in Split.
 
 ### Advanced Demonstration Summary
+
+* Split makes it easy to have fine-grained control over the values that are returned from a treatment
+* One dimension of granularity is a `segment` that identifies groups of like things - like users.
+* Another dimension of granularity is arbitrary attributes that can be passed over to split and evaluated.
+* If a feature behind a feature flag gets out of control, it's easy to kill it for everyone using Split's kill switch.

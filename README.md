@@ -1,6 +1,6 @@
 # Pure JS Pac-Man
 
-![Pac Split Man](split_screen.gif)
+![Pac Split Man](readme_images/split_screen.gif)
 
 Table of Contents:
 * [Set up](#set-up)
@@ -82,15 +82,49 @@ After creating an account, follow these instructions:
 1. Click **Create Sandbox** in the upper right.
 2. Click **Import Project** on the left of the dialog.
 3. Paste the URL to the GitHub repo and click **Import and Fork**.
-    * **Note:** You should see an embedded browser on the right hand side with the pac-man game loaded. There's a icon (![new window](new_window.png)) on the upper right to open in a new window. Doing this will give you more screen real estate to interact with the game while still keeping it in sync with CodeSandbox.
-4. Click the Server Control Panel icon (![server control panel](server_control_panel.png)) on the far left.
+    * **Note:** You should see an embedded browser on the right hand side with the pac-man game loaded. There's a icon (![new window](readme_images/new_window.png)) on the upper right to open in a new window. Doing this will give you more screen real estate to interact with the game while still keeping it in sync with CodeSandbox.
+4. Click the Server Control Panel icon (![server control panel](readme_images/server_control_panel.png)) on the far left.
 5. In the _Secret Keys_ section section, enter: `SPLIT_AUTH_KEY` for _Name_ and paste your Split API Key for _Value_.
 6. Click **Add Secret**.
-
-The app will automatically restart at this point.
+7. Click **Restart Server** in the `Control Container` section on the left.
+8. Click the refresh button in the browser where pac-man is running.
+    
+    **NOTE**: This is the only time you need to refresh the browser. From this point on, changes in the Split configuration will be reflected in the browser in near-realtime.
 
 Continue on to the [Basic Demonstration](#basic-demonstration).
 
 ## Basic Demonstration
 
+When you first load the pac-man game, notice that it's in `CHILL` mode (![chill mode](readme_images/chill.png)).
+
+**NOTE**: You can click **s** on your keyboard at any time to toggle the sound.
+
+Start playing, and notice that the ghosts are moving completely randomly. While the game is still active, click **p** on your keyboard to pause the game.
+
+Back in your Split admin console, click **Splits** and click **PacMan_RadarGhost**. Scroll down on the right and change the value for `serve` in the `Set the default rule` section to **on**. Click **Save changes** and click **Confirm**.
+
+Notice that the mode has changed to `RADAR` mode (![radar mode](readme_images/radar.png)).
+
+Click **p** on your keyboard to un-pause the game. And now, you better run! The ghosts are now very aware of your position and they are all heading for it.
+
+Feel free to switch back to `CHILL` mode by setting the default rule to **off**. You should notice that the ghost mode in the game switched in near-realtime as you make changes in Split.
+
+### Basic Demonstration Summary
+
+Key takeaways from this demonstration are:
+
+* Configuring your app to communicate with Split requires an API Key.
+* Treatment state can be managed easily from your Split Admin Console.
+* Changes to treatments in Split are reflected in your apps in near-realtime thanks to Split's streaming capabilities.
+
 ## Advanced Demonstration
+
+In the [Basic Demonstration](#basic-demonstration), you experienced some of the power of live state change with Split. So far, it's been a global setting: either everyone always gets the `CHILL` ghost mode or everyone always gets the `RADAR` ghost mode.
+
+Split has a lot more power through fine grained control on how and when users see different treatments.
+
+A `segment` is a grouping of users along some common dimension. Let's set up pac-man to `RADAR` mode for select users.
+
+From your Split admin console click **Segments**. 
+
+### Advanced Demonstration Summary

@@ -11,6 +11,7 @@ Table of Contents:
 * [Basic Demonstration](#basic-demonstration)
 * [Advanced Demonstration](#advanced-demonstration)
 * [Data Demonstration](#data-demonstration)
+* [Reset Demo](#reset-demo)
 
 Check out the blog post that uses this repo [here](https://www.split.io/blog/feature-flag-benefits-pacman/).
 
@@ -179,6 +180,9 @@ to generate a volume of events that mimics many games played over time.
 
 To set the stage for this part of the demonstration, return to your Split admin console.
 
+Click **DE > Admin settings > Event types**. Create an event type called: `PacMan_TTL`. Choose the default workspace and
+`user` for traffic type. Click **Create**.
+
 Click **Splits** and click **PacMan_RadarGhost**.
 
 Click **Add rule** in the `Set targeting rules` section.
@@ -266,3 +270,13 @@ Outside the `setInterval` function a call to `setTimeout` is made with a value o
 * With lots of captured data, you can set up an experiment to get hard data on how effective your new features are performing
 * For the purposes of demonstration, we mocked out a bunch of events.
 * In a real production scenario, these events would naturally be fired and a large volume of data would be collected by end-users using the application.
+
+## Reset Demo
+
+If you plan to run this demo multiple times, you'll want to back out all the settings created above.
+
+Go to **DE > Admin settings > Event types**. Delete `PacMan_TTL`.
+
+Go to **Splits > PacMan_RadarGhost**. Delete targetting rules. Delete Split.
+
+Go to **Segments > PacMan_RadarGhost_Users**. Delete users. Delete definition. Delete segment.

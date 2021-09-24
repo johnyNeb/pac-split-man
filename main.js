@@ -64,12 +64,12 @@ function fireEvents() {
                 `with treatment: ${treatmentResult}`);
             clientInfo.client.track('user', 'PacMan_TTL', ttl);
         });
-    }, 500);
+    }, 250);
 
     setTimeout(() => {
         clearInterval(interval);
         SplitConfig.core.key = origKey;
-    }, 20000);
+    }, 40000);
 }
 
 function handleTreatments() {

@@ -62,7 +62,7 @@ function fireEvents() {
                 randomIntFromInterval(30000, 100000);
             console.log(`ttl for user: ${clientInfo.user} is ${ttl} ` + 
                 `with treatment: ${treatmentResult}`);
-            localClient.track('user', 'PacMan_TTL', ttl);
+            clientInfo.client.track('user', 'PacMan_TTL', ttl);
         });
     }, 500);
 

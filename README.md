@@ -10,6 +10,7 @@ Table of Contents:
     * [Deploy to CodeSandbox](#deploy-to-codesandbox)
 * [Basic Demonstration](#basic-demonstration)
 * [Advanced Demonstration](#advanced-demonstration)
+* [Data Demonstration](#data-demonstration)
 
 Check out the blog post that uses this repo [here](https://www.split.io/blog/feature-flag-benefits-pacman/).
 
@@ -167,3 +168,101 @@ You can easily restore the feature flag back to it's former settings by clicking
 * One dimension of granularity is a `segment` that identifies groups of like things - like users.
 * Another dimension of granularity is arbitrary attributes that can be passed over to split and evaluated.
 * If a feature behind a feature flag gets out of control, it's easy to kill it for everyone using Split's kill switch.
+
+## Data Demonstration
+
+Among the things that differentiate Split from its competitors is the ability to generate and track events, 
+automatically detect and notify deviations from expected behavior, and to run sophisticated experiments.
+
+Data gathering only becomes useful when there's a large volume of data across many users. The Pac-Man game has a mode
+to generate a volume of events that mimics many games played over time.
+
+To set the stage for this part of the demonstration, return to your Split admin console.
+
+Click **Splits** and click **PacMan_RadarGhost**.
+
+Click **Add rule** in the `Set targeting rules` section.
+
+From the dropdown, choose **string(starts with,...) > is in list** and then in the textbox, enter
+**user_1**, **user_2**, **user_3**, **user_4**, **user_5**.
+
+**NOTE**: After each user entry (eg **user_1**), hit **enter** so that split recognizes the value.
+
+It should look similar to this:
+
+![rule2](readme_images/users.png)
+
+It's a compelling demonstration of what we're setting up here to have a split-screen set up with the pac-man game on the left and the Split admin console on the right.
+
+In the Split admin console, click **Data hub** on the lower left. From the `Data type` dropdown, select **Events**. Click **Query** to start a live tail of events.
+
+In the pac-man window, open the developer tools, focus on the console and navigate to: `http://localhost:3000/?fireEvents=true`
+
+You'll see output in the browser console showing that events are firing.
+
+In the Split admin console window, you should see events to start rolling in.
+
+**NOTE**: It may take some time for events to start showing in the Split admin console.
+
+Now that you've seen this in action, let's break down what's going on here.
+
+For this part of the demonstration, we're simulating lots of pac-man sessions over time. Some will have the ghosts in the radar mode and some will have the ghosts in the chill mode.
+
+When the ghosts are in radar mode, pac-man dies sooner - somewhere within 3 and 10 seconds.
+
+when the ghosts are in chill mode, pac-man survives longer - somewhere within 30 and 100 seconds.
+
+The way we're simulating this activity is to setup 10 Split clients. Half are configured such that when `getTreatment('PacMan_RadarGhost')` is called, `on` is returned. For the other half, `off` is returned.
+
+A call to `client.track('user', 'PacMan_TTL', ttl)` is made every quarter-second for 40 seconds for a total of 160 tracking calls (simulating 160 pac-man deaths at the hands of the ghosts).
+
+This is the critical piece of code being run:
+
+```
+function fireEvents() {
+    var origKey = SplitConfig.core.key;
+    var clients = [];
+    for (let i=0;i<10;i++) {
+        SplitConfig.core.key = `user_${(i+1)}`
+        clients.push({ 
+            user: SplitConfig.core.key, client: splitio(SplitConfig).client() 
+        });
+    }
+    const interval = setInterval(() => {
+        var clientInfo = clients[randomIntFromInterval(0, 9)];
+        clientInfo.client.ready().then(() => {
+            var treatmentResult = clientInfo.client.getTreatment(
+                'PacMan_RadarGhost', attributes
+            );
+            var ttl = (treatmentResult === 'on') ? 
+                randomIntFromInterval(3000, 10000) :
+                randomIntFromInterval(30000, 100000);
+            console.log(`ttl for user: ${clientInfo.user} is ${ttl} ` + 
+                `with treatment: ${treatmentResult}`);
+            localClient.track('user', 'PacMan_TTL', ttl);
+        });
+    }, 250);
+
+    setTimeout(() => {
+        clearInterval(interval);
+        SplitConfig.core.key = origKey;
+    }, 40000);
+}
+```
+
+The `for` loop at the top constructs 10 instances of the Split client. Based on the targeting rules set up earlier, half of these clients will get the `on` treatment and half will get the `off` treatment.
+
+Next, a call to `setInterval` is made with an interval of 250 milliseconds.
+
+For each interval, one of the 10 clients is selected at random. A call to `getTreatment` is made. A random time-to-live value is set based on returned value of the call to `getTreatment`.
+
+A call is made to the `track` function passing in `PacMan_TTL` as the event name to track.
+
+Outside the `setInterval` function a call to `setTimeout` is made with a value of 40 seconds. The code that is executed after the 40 seconds clears the interval, thus stopping the calls to `track`.
+
+### Data Demonstration Summary
+
+* Split makes it easy to define and track events along whatever dimensions make sense for use case
+* With lots of captured data, you can set up an experiment to get hard data on how effective your new features are performing
+* For the purposes of demonstration, we mocked out a bunch of events.
+* In a real production scenario, these events would naturally be fired and a large volume of data would be collected by end-users using the application.

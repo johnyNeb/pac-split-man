@@ -9,6 +9,9 @@ const urlParams = new URLSearchParams(queryString);
 
 var treatments = [];
 var attributes = {};
+
+// key, treatments, fireEvents are special
+// everything else is loaded into attributes
 for (const [paramName, paramValue] of urlParams) {
     if (paramName === 'key') {
         SplitConfig.core.key = paramValue;

@@ -151,8 +151,18 @@ function Game(wrapper) {
         ctx.fillStyle = "#000000";
         ctx.fillRect(0, topLeft, (map.width * map.blockSize), 30);
 
-        ctx.fillStyle = "#FFFF00";
+        
+        ctx.fillStyle = "#FF0000";
+        ctx.font = "bold 16px sans-serif";
+        ctx.fillText("CGI", 30, 270);
 
+        const currentDate = new Date();
+        if (currentDate.getMonth() === 11){
+            ctx.fillText("Fijn", 530, 270);
+            ctx.fillText("Kerst",520, 290);
+        }
+        
+        
         for (let i = 0, len = user.getLives(); i < len; i++) {
             ctx.fillStyle = "#FFFF00";
             ctx.beginPath();

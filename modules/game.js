@@ -173,7 +173,7 @@ function Game(wrapper) {
         ctx.fillText("Score: " + user.theScore(), 44, textBase);
         ctx.fillText("Level: " + level, 160, textBase);
         ctx.font = "11px BDCartoonShoutRegular";
-        ctx.fillText("Ghosts: " + (ghosts[0].getMode() === Ghost.RADAR ? 'RADAR' : 'CHILL'), 340, textBase);
+        ctx.fillText("Ghost: " + (ghosts[0].getMode() === Ghost.RADAR ? 'RADAR' : 'CHILL'), 340, textBase);
         ctx.fillText("PacMan: " + 'Manual', 460, textBase);
     }
 

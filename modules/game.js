@@ -185,6 +185,44 @@ function Game(wrapper) {
         ctx.font = "11px BDCartoonShoutRegular";
         ctx.fillText("Ghost: " + (ghosts[0].getMode() === Ghost.RADAR ? 'RADAR' : 'CHILL'), 340, textBase);
         ctx.fillText("PacMan: " + 'Manual', 460, textBase);
+        
+ 
+        var x = 80;
+        var y = 230;
+        ctx.beginPath();
+        ctx.moveTo(x, y);
+        ctx.lineTo(x - 10, y + 30);
+        ctx.lineTo(x + 10, y + 30);
+        ctx.closePath();
+        ctx.fillStyle = "green";
+        ctx.fill();
+
+        ctx.beginPath();
+        ctx.moveTo(x, y + 10);
+        ctx.lineTo(x - 15, y + 40);
+        ctx.lineTo(x + 15, y + 40);
+        ctx.closePath();
+        ctx.fillStyle = "green";
+        ctx.fill();
+
+        ctx.beginPath();
+        ctx.moveTo(x, y + 20);
+        ctx.lineTo(x - 20, y + 50);
+        ctx.lineTo(x + 20, y + 50);
+        ctx.closePath();
+        ctx.fillStyle = "green";
+        ctx.fill();
+
+        ctx.beginPath();
+        ctx.moveTo(x, y + 30);
+        ctx.lineTo(x - 25, y + 60);
+        ctx.lineTo(x + 25, y + 60);
+        ctx.closePath();
+        ctx.fillStyle = "green";
+        ctx.fill();
+
+
+        
     }
 
     function redrawBlock(pos) {
